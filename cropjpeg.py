@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
+import os
 import tkinter as tk
-from tkinter import simpledialog
+from tkinter import messagebox, simpledialog
 from PIL import Image, ImageGrab, ImageTk
 
 
@@ -81,15 +82,21 @@ def main():
     def save(_=None):
         if img is None:
             return
-        name = simpledialog.askstring("Save", "File name:")
-        if not name:
-            return
+        while True:
+            name = simpledialog.askstring("Save", "File name:")
+            if not name:
+                return
+            path = name + ".jpg"
+            if not os.path.exists(path):
+                break
+            messagebox.showerror("File exists",
+                                 f"{path} already exists. Pick another name.")
         box = (int((p1[0] - ox) / scale), int((p1[1] - oy) / scale),
                int((p2[0] - ox) / scale), int((p2[1] - oy) / scale))
-        img.crop(box).save(name + ".jpg", "JPEG")
+        img.crop(box).save(path, "JPEG")
 
-    root.bind("v", paste)
-    root.bind("s", save)
+    root.bind("<Control-v>", paste)
+    root.bind("<Control-s>", save)
     canvas.bind("<Button-1>", press)
     canvas.bind("<B1-Motion>", motion)
 
