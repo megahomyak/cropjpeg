@@ -10,7 +10,7 @@ def main():
     WIDTH  = 2   # crop rectangle border thickness, in pixels
 
     root = tk.Tk()
-    root.title("cropjpeg: v to paste, drag handles, s to save")
+    root.title("cropjpeg: ctrl-v to paste; drag handles; ctrl-s to save")
     try:
         root.state("zoomed")              # Windows
     except tk.TclError:
